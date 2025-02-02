@@ -1,0 +1,2 @@
+concordance_check> concordance test_cases/resources/multi_word.txt
+concordance_check> exit

@@ -1,0 +1,4 @@
+concordance_check> add swan
+concordance_check> add pearl
+concordance_check> concordance test_cases/resources/multi_word.txt
+concordance_check> exit

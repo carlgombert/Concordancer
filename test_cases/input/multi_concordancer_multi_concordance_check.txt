@@ -1,0 +1,10 @@
+concordance_check> load test_cases/resources/dictionary_large.txt
+concordance_check> concordance test_cases/resources/small_spell_test.txt
+concordance_check> concordance test_cases/resources/small_spell_test_2.txt
+concordance_check> load test_cases/resources/dictionary_medium.txt
+concordance_check> concordance test_cases/resources/small_spell_test.txt
+concordance_check> concordance test_cases/resources/small_spell_test_2.txt
+concordance_check> load test_cases/resources/dictionary_large.txt
+concordance_check> concordance test_cases/resources/one_word.txt
+concordance_check> concordance test_cases/resources/multi_word.txt
+concordance_check> exit

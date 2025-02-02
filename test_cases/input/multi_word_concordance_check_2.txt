@@ -1,0 +1,6 @@
+concordance_check> add locke
+concordance_check> add rousseau
+concordance_check> add bentham
+concordance_check> add hume
+concordance_check> concordance test_cases/resources/multi_word.txt
+concordance_check> exit

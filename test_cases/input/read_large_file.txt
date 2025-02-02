@@ -1,0 +1,14 @@
+concordance_check> load test_cases/resources/dictionary_large.txt
+concordance_check> query xs
+concordance_check> query xc
+concordance_check> query auhywa
+concordance_check> query ewjfejkl
+concordance_check> query xmthajx
+concordance_check> query asidhvg
+concordance_check> query tubzthl
+concordance_check> query fivui
+concordance_check> query rye
+concordance_check> query eye
+concordance_check> query ptohfvvhqi
+concordance_check> query lpmqgjlqad
+concordance_check> exit

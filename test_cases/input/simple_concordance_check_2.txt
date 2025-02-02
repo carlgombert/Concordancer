@@ -1,0 +1,5 @@
+concordance_check> add nuclear
+concordance_check> add hydra
+concordance_check> concordance test_cases/resources/one_word.txt
+concordance_check> print
+concordance_check> exit

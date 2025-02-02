@@ -1,0 +1,18 @@
+CSCI 2021 Concordancer System
+Commands:
+  add <word>:              adds a new word to concordancer
+  query <word>:            queries for a word
+  print:                   shows all words currently in the concordancer
+  reset:                   resets all word counts to 0 in the concordancer
+  load <file_name>:        reads in word list from a file
+  save <file_name>:        writes concordancer to a file
+  concordance <file_name>: runs a concordance and spell check on the specified file
+  exit:                    exits the program
+concordance_check> add locke
+concordance_check> add rousseau
+concordance_check> add bentham
+concordance_check> add hume
+concordance_check> concordance test_cases/resources/multi_word.txt
+pearl[X] swan[X] arrow[X] hydra[X]
+lamppost[X] flame[X] tempest[X] pearl[X]
+concordance_check> exit

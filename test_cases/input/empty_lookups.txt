@@ -1,0 +1,5 @@
+concordance_check> query four
+concordance_check> query score
+concordance_check> query and
+concordance_check> query seven
+concordance_check> exit

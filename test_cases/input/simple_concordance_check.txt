@@ -1,0 +1,8 @@
+concordance_check> add pearl
+concordance_check> add hydra
+concordance_check> add swan
+concordance_check> add tempest
+concordance_check> add arrow
+concordance_check> add flame
+concordance_check> concordance test_cases/resources/one_word.txt
+concordance_check> exit

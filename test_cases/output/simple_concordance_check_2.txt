@@ -1,0 +1,18 @@
+CSCI 2021 Concordancer System
+Commands:
+  add <word>:              adds a new word to concordancer
+  query <word>:            queries for a word
+  print:                   shows all words currently in the concordancer
+  reset:                   resets all word counts to 0 in the concordancer
+  load <file_name>:        reads in word list from a file
+  save <file_name>:        writes concordancer to a file
+  concordance <file_name>: runs a concordance and spell check on the specified file
+  exit:                    exits the program
+concordance_check> add nuclear
+concordance_check> add hydra
+concordance_check> concordance test_cases/resources/one_word.txt
+nuclear
+concordance_check> print
+nuclear 1
+hydra 0
+concordance_check> exit

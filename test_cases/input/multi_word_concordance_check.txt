@@ -1,0 +1,11 @@
+concordance_check> add tempest
+concordance_check> add arrow
+concordance_check> add flame
+concordance_check> add hydra
+concordance_check> add pearl
+concordance_check> add swan
+concordance_check> add lamppost
+concordance_check> add lookingglass
+concordance_check> add orchid
+concordance_check> concordance test_cases/resources/multi_word.txt
+concordance_check> exit

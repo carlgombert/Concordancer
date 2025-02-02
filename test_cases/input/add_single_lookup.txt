@@ -1,0 +1,3 @@
+concordance_check> add nuclear
+concordance_check> query nuclear
+concordance_check> exit

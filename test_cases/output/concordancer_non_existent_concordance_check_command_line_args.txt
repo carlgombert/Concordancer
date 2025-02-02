@@ -1,0 +1,2 @@
+Word list successfully loaded from text file
+Concordance check failed

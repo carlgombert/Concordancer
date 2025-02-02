@@ -1,0 +1,21 @@
+concordance_check> load test_cases/resources/dictionary_large.txt
+concordance_check> query ivim
+concordance_check> query kga
+concordance_check> query lga
+concordance_check> query nddjfshg
+concordance_check> query finalpq
+concordance_check> query hydra
+concordance_check> query zcmuo
+concordance_check> query tzmvdot
+concordance_check> query swan
+concordance_check> query xafepwir
+concordance_check> load test_cases/resources/dictionary_medium.txt
+concordance_check> query ikojvrvxef
+concordance_check> query luas
+concordance_check> query ywnf
+concordance_check> query nvmcifyrsz
+concordance_check> query vymk
+concordance_check> query pearl
+concordance_check> add pearl
+concordance_check> query pearl
+concordance_check> exit

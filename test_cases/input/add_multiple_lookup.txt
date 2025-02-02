@@ -1,0 +1,13 @@
+concordance_check> add hydra
+concordance_check> add pearl
+concordance_check> add tempest
+concordance_check> add swan
+concordance_check> add flame
+concordance_check> add orchid
+concordance_check> query flame
+concordance_check> query orchid
+concordance_check> query swan
+concordance_check> query hydra
+concordance_check> query pearl
+concordance_check> query tempest
+concordance_check> exit
