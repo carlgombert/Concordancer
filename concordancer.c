@@ -14,8 +14,12 @@ concordancer_t *create_concordancer() {
 }
 
 int hash_code(const char* word) {
-    // TODO Not yet implemented
-    return 0;
+    int sum = 0;
+    int i = 0;
+    while(word[i] != '\0'){
+        sum += word[i] * i;
+    }
+    return sum;
 }
 
 int cord_insert(concordancer_t *cord, const char *word) {
