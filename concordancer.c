@@ -5,6 +5,7 @@
 
 table_t *create_table() {
     // TODO Not yet implemented
+    // malloc table size = length*size of listnode
     return NULL;
 }
 
@@ -32,7 +33,7 @@ int cord_insert(concordancer_t *cord, const char *word) {
     
     if(array[index] == NULL){
         void *ptr = malloc(sizeof(list_node_t));
-        struct list_node node;
+        list_node_t node;
         node.word = *word;
         ptr = &node;
         array[index] = ptr;

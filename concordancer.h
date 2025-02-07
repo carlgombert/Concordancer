@@ -13,7 +13,7 @@ typedef struct list_node {
 
 // Data type for a hash table. Use chaining for collisions, so array of list_nodes
 typedef struct {
-    list_node_t **array; // base array for hash table
+    list_node_t **array; // base array for hash table, array of pointers to linked lists
     unsigned int length; // Length of base array
 } table_t;
 
