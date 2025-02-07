@@ -23,14 +23,19 @@ int hash_code(const char* word) {
 }
 
 int cord_insert(concordancer_t *cord, const char *word) {
-    int length = cord->length;
+    int length = cord->size;
     int hash = hash_code(word);
+
     int index = hash%length;
+
     list_node_t **array = cord->table->array;
+    
     if(array[index] == NULL){
+        void *ptr = malloc(sizeof(list_node_t));
         struct list_node node;
-        
-        array[index] = *word;
+        node.word = *word;
+        ptr = &node;
+        array[index] = ptr;
     }
     else{
 
