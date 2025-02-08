@@ -3,16 +3,7 @@
 #include <string.h>
 #include "concordancer.h"
 
-void copy_string();
 
-void copy_string(char (*)[128] dest, char (*)[128] source, int bounds){
-    int i = 0;
-    while(source[i] != '\0' && i < bounds){   
-        dest[i] = source[i];
-        i++;
-    }
-
-}
 
 table_t *create_table() {
     // TODO Not yet implemented
@@ -44,7 +35,7 @@ int cord_insert(concordancer_t *cord, const char *word) {
     
     if(NULL == array[index]){
         list_node_t *node = malloc(sizeof(list_node_t));
-        strcpy(&(node->word), word);
+        strcpy((node->word), word);
         array[index] = node;
         cord->size += 1;
     }
@@ -54,7 +45,7 @@ int cord_insert(concordancer_t *cord, const char *word) {
             curr = curr->next;
         }
         list_node_t *node = malloc(sizeof(list_node_t));
-        strcpy(&(node->word), word);
+        strcpy((node->word), word);
         curr->next = node;
         cord->size += 1;
     }
