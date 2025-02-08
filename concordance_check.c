@@ -34,33 +34,68 @@ int main(int argc, char **argv) {
 
     while (1) {
         printf("concordance_check> ");
+
         if (scanf("%s", cmd) == EOF) {
             printf("\n");
             break;
         }
 
         if (strcmp("add", cmd) == 0) {
+            scanf("%s", cmd);
 
+            if(NULL == cord){
+                cord = create_concordancer();
+            }         
+
+            if(!cord_query(cord, cmd)){
+                int success = cord_insert(cord, cmd);
+                if (!success) {                      
+                    printf("add failed\n");
+                }
+                else{
+                    printf("added\n");
+                }
+            }
+            else{
+                printf("added\n");
+            }
         }
 
         if (strcmp("query", cmd) == 0) {
+            scanf("%s", cmd);
 
+            if(NULL == cord){
+                cord = create_concordancer();
+            }
+
+            if(cord_query(cord, cmd)){
+                printf("element exists\n");
+            }
+            printf("element does not exist\n");
         }
 
         if (strcmp("print", cmd) == 0) {
-
+            if(NULL == cord){
+                cord = create_concordancer();
+            }
+            cord_print(cord);
         }
 
         if (strcmp("reset", cmd) == 0) {
-
+            if(NULL == cord){
+                cord = create_concordancer();
+            }
+            cord_reset(cord);
         }
 
         if (strcmp("load", cmd) == 0) {
-
+            if(NULL != cord){
+                cord_free(cord);
+            }
         }
 
         if (strcmp("save", cmd) == 0) {
-
+            
         }
 
         if (strcmp("concordance", cmd) == 0) {

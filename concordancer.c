@@ -110,11 +110,32 @@ void cord_print(const concordancer_t *cord) {
 }
 
 void cord_reset(concordancer_t *cord) {
-    // TODO Not yet implemented
+
+    for(int i = 0; i < cord->table->length; i++){
+
+      list_node_t *curr = cord->table->array[i];
+
+      while(NULL != curr){
+        curr->count = 0;
+        curr = curr->next;
+      }
+    }
+
 }
 
 void cord_free(concordancer_t *cord) {
-    // TODO Not yet implemented
+    for(int i = 0; i < cord->table->length; i++){
+
+      list_node_t *curr = cord->table->array[i];
+
+      while(NULL != curr){
+        void* temp = curr;
+        curr = curr->next;
+        free(temp);
+      }
+    }
+    free(cord->table);
+    free(cord);
 }
 
 concordancer_t *read_cord_from_text_file(const char *file_name) {
