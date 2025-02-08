@@ -39,10 +39,39 @@ int main(int argc, char **argv) {
             break;
         }
 
+        if (strcmp("add", cmd) == 0) {
+
+        }
+
+        if (strcmp("query", cmd) == 0) {
+
+        }
+
+        if (strcmp("print", cmd) == 0) {
+
+        }
+
+        if (strcmp("reset", cmd) == 0) {
+
+        }
+
+        if (strcmp("load", cmd) == 0) {
+
+        }
+
+        if (strcmp("save", cmd) == 0) {
+
+        }
+
+        if (strcmp("concordance", cmd) == 0) {
+
+        }
+
         if (strcmp("exit", cmd) == 0) {
             cord_free(cord);
             return 0;
         }
+
          // TODO Add cases for the other commands
         // Read in the command and any additional arguments (where needed)
 

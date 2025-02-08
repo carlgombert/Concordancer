@@ -16,7 +16,9 @@ table_t *create_table() {
 
 concordancer_t *create_concordancer() {
     concordancer_t *cord = malloc(sizeof(concordancer_t));
-    return NULL;
+    cord->table = create_table();
+    cord->size = 0;
+    return cord;
 }
 
 int hash_code(const char* word) {
@@ -56,12 +58,55 @@ int cord_insert(concordancer_t *cord, const char *word) {
 }
 
 int cord_query(concordancer_t *cord, const char *query) {
-    // TODO Not yet implemented
-    return 0;
+    int hash = hash_code(query);
+    int index = hash%cord->table->length;
+
+    list_node_t **array = cord->table->array;
+    if(NULL == array[index]){
+      return -1;
+    }
+    else {
+      	list_node_t *curr = array[index];
+      	while(NULL != curr){
+          	if(strcmp(query, curr->word) == 0){
+                  curr->count += 1;
+                  return 0;
+          	}
+            curr = curr->next;
+        }
+        return -1;
+    }
+    return -1;
 }
 
 void cord_print(const concordancer_t *cord) {
-    // TODO Not yet implemented
+    list_node_t *nodes[cord->size];
+    int count = 0;
+
+    for(int i = 0; i < cord->table->length; i++){
+      list_node_t *curr = cord->table->array[i];
+      while(NULL != curr){
+        nodes[count] = curr;
+        curr = curr->next;
+        count++;
+      }
+    }
+
+    //insertion sort of list nodes
+    for(int i = 0; i < count; i++){
+    	list_node_t *curr = nodes[i];
+    	int j = i-1;
+
+    	while(j>=0 && nodes[j]->count < curr->count){
+    		nodes[j+1] = nodes[j];
+    		j = j-1;
+    	}
+    	nodes[j+1] = curr;
+    }
+
+    for(int i = 0; i < count; i++){
+    	printf("%s %d\n", nodes[i]->word, nodes[i]->count);
+    }
 }
 
 void cord_reset(concordancer_t *cord) {
