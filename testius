@@ -99,7 +99,16 @@ def drainOutput(fd, timeout, prompt):
         res = p.poll((deadline - current_time) * 1000) # poll timeout is in msec rather than sec
         if len(res) > 0:
             _, revents = res[0]
-            if revents & select.POLLIN:
+            if revents & select.POLLIvoid copy_string();
+
+void copy_string(char (*)[128] dest, char (*)[128] source, int bounds){
+    int i = 0;
+    while(source[i] != '\0' && i < bounds){   
+        dest[i] = source[i];
+        i++;c
+    }
+
+}N:
                 payload = os.read(fd, BUF_SIZE).decode("utf8", errors='replace')
                 payload = payload.replace("\r\n", "\n")
                 output += payload

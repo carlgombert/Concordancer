@@ -8,11 +8,14 @@
 table_t *create_table() {
     // TODO Not yet implemented
     // malloc table size = length*size of listnode
-    return NULL;
+    table_t *table = malloc(sizeof(table_t));
+    table->array = malloc(sizeof(list_node_t)*INITIAL_HASH_TABLE_SIZE);
+    table->length = INITIAL_HASH_TABLE_SIZE;
+    return table;
 }
 
 concordancer_t *create_concordancer() {
-    // TODO Not yet implemented
+    concordancer_t *cord = malloc(sizeof(concordancer_t));
     return NULL;
 }
 
