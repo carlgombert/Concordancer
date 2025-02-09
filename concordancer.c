@@ -139,11 +139,51 @@ void cord_free(concordancer_t *cord) {
 }
 
 concordancer_t *read_cord_from_text_file(const char *file_name) {
-    // TODO Not yet implemented
-    return NULL;
+    void* file = fopen(file_name, "r");
+    concordancer_t *cord = create_concordancer();
+
+    char word[MAX_WORD_LEN];
+    while (fscanf(file, "%*s", word) == 1){
+        if(!cord_query(cord, &word)){
+            cord_insert(cord, &word);
+        }
+    }
+    fclose(file);
+    return cord;
 }
 
 int write_cord_to_text_file(const concordancer_t *cord, const char *file_name) {
-    // TODO Not yet implemented
+
+    list_node_t *nodes[cord->size];
+    int count = 0;
+    
+    for(int i = 0; i < cord->table->length; i++){
+      list_node_t *curr = cord->table->array[i];
+      while(NULL != curr){
+        nodes[count] = curr;
+        curr = curr->next;
+        count++;
+      }
+    }
+
+    //insertion sort of list nodes
+    for(int i = 0; i < count; i++){
+    	list_node_t *curr = nodes[i];
+    	int j = i-1;
+
+    	while(j>=0 && nodes[j]->count < curr->count){
+    		nodes[j+1] = nodes[j];
+    		j = j-1;
+    	}
+    	nodes[j+1] = curr;
+    }
+
+    void* file = fopen(file_name, "w");
+
+    for(int i = 0; i < count; i++){
+    	fprintf(file, "%s %d\n", nodes[i]->word, nodes[i]->count);
+    }
+
+    fclose(file);
     return 0;
 }

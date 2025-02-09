@@ -10,7 +10,28 @@
 // 'file_name': Name of the file to spell check
 // 'cord': A concordancer containing valid words
 int concordance_file(const char *file_name, concordancer_t *cord) {
-    // TODO Not yet implemented
+    concordancer_t *new_cord = read_cord_from_text_file(file_name);
+
+    list_node_t *nodes[new_cord->size];
+    int count = 0;
+    
+    for(int i = 0; i < new_cord->table->length; i++){
+      list_node_t *curr = new_cord->table->array[i];
+      while(NULL != curr){
+        nodes[count] = curr;
+        curr = curr->next;
+        count++;
+      }
+    }
+
+    for(int i = 0; i < count; i++){
+    	printf("%s", nodes[i]->word);
+        if(!cord_query(cord, nodes[i]->word)){
+            printf("[X]");
+        }
+        printf(" ");
+    }
+    
     return 0;
 }
 
@@ -89,17 +110,32 @@ int main(int argc, char **argv) {
         }
 
         if (strcmp("load", cmd) == 0) {
+            scanf("%s", cmd);
+
             if(NULL != cord){
                 cord_free(cord);
             }
+            
+            cord = read_cord_from_text_file(cmd);
         }
 
         if (strcmp("save", cmd) == 0) {
+            scanf("%s", cmd);
+            if(NULL == cord){
+                cord = create_concordancer();
+            }
             
+            write_cord_to_text_file(cord, cmd);
         }
 
         if (strcmp("concordance", cmd) == 0) {
+            scanf("%s", cmd);
+            
+            if(NULL == cord){
+                cord = create_concordancer();
+            }
 
+            concordance_file(cmd, cord);
         }
 
         if (strcmp("exit", cmd) == 0) {
