@@ -11,7 +11,7 @@
 // 'cord': A concordancer containing valid words
 int concordance_file(const char *file_name, concordancer_t *cord) {
     void* file = fopen(file_name, "r");
-    if(!file){
+    if(!file){ // ensure file exists
         printf("Concordance check failed\n");
         return 0;
     }
@@ -19,7 +19,7 @@ int concordance_file(const char *file_name, concordancer_t *cord) {
     int i = 0;
     char ch;
 
-    while ((ch = fgetc(file)) != EOF){
+    while ((ch = fgetc(file)) != EOF){ // read file char by char to preserve spacing
         if(ch != ' ' && ch != '\n'){
             word[i] = ch;
             i++;
@@ -45,6 +45,24 @@ int concordance_file(const char *file_name, concordancer_t *cord) {
 int main(int argc, char **argv) {
     char cmd[MAX_CMD_LEN];
     concordancer_t *cord = NULL;
+
+    // reading command line args
+    if(argc > 1){ // if given initial cord
+        cord = read_cord_from_text_file(argv[1]);
+        if(NULL == cord){
+            printf("Failed to read word list from text file\n");
+            cord_free(cord);
+            return 0;
+        }
+        else if (argc > 2){
+            printf("Word list successfully loaded from text file\n");
+        }
+        if(argc > 2){ // if given second cord for spell check
+            concordance_file(argv[2], cord);
+            cord_free(cord);
+            return 0;
+        }
+    }
     
     printf("CSCI 2021 Concordancer System\n");
     printf("Commands:\n");
@@ -57,13 +75,6 @@ int main(int argc, char **argv) {
     printf("  concordance <file_name>: runs a concordance and spell check on the specified file\n");
     printf("  exit:                    exits the program\n");
 
-    if(argc > 1){
-        cord = read_cord_from_text_file(argv[1]);
-        if(argc > 2){
-            concordance_file(argv[2], cord);
-        }
-    }
-    
 
     while (1) {
         printf("concordance_check> ");
@@ -80,7 +91,7 @@ int main(int argc, char **argv) {
                 cord = create_concordancer();
             }         
 
-            if(!cord_query(cord, cmd)){
+            if(!cord_query(cord, cmd)){ // make sure word isn't already in concordancer to avoid duplicates
                 int success = cord_insert(cord, cmd);
                 if (!success) {                      
                     printf("add failed\n");
@@ -163,13 +174,12 @@ int main(int argc, char **argv) {
             return 0;
         }
 
-         // TODO Add cases for the other commands
-        // Read in the command and any additional arguments (where needed)
-
         else {
             printf("Unknown command %s\n", cmd);
         }
     }
 
+    // free any remaining memory just in case
+    cord_free(cord);
     return 0;
 }

@@ -6,7 +6,6 @@
 
 
 table_t *create_table() {
-    // TODO Not yet implemented
     // malloc table size = length*size of listnode
     table_t *table = malloc(sizeof(table_t));
     table->array = malloc(sizeof(list_node_t*)*INITIAL_HASH_TABLE_SIZE);
@@ -44,7 +43,7 @@ int cord_insert(concordancer_t *cord, const char *word) {
 
     list_node_t **array = cord->table->array;
     
-    if(NULL == array[index]){
+    if(NULL == array[index]){ // if there is no collision 
         list_node_t *node = malloc(sizeof(list_node_t));
         strcpy((node->word), word);
         node->next = NULL;
@@ -53,7 +52,7 @@ int cord_insert(concordancer_t *cord, const char *word) {
         array[index] = node;
         cord->size += 1;
     }
-    else{
+    else{ // if there is a collision, attach word to the end of chain
         list_node_t *curr = array[index];
         while(NULL != curr->next){
             curr = curr->next;
@@ -96,6 +95,7 @@ void cord_print(const concordancer_t *cord) {
     list_node_t *nodes[cord->size];
     int count = 0;
 
+    // add all of the words to a single linked list
     for(int i = 0; i < cord->table->length; i++){
       list_node_t *curr = cord->table->array[i];
       while(NULL != curr){
@@ -105,7 +105,7 @@ void cord_print(const concordancer_t *cord) {
       }
     }
 
-    //insertion sort of list nodes
+    //insertion sort of occurances in list nodes
     for(int i = 0; i < count; i++){
     	list_node_t *curr = nodes[i];
     	int j = i-1;
@@ -117,6 +117,7 @@ void cord_print(const concordancer_t *cord) {
     	nodes[j+1] = curr;
     }
 
+    // print out all words
     for(int i = 0; i < count; i++){
     	printf("%s %d\n", nodes[i]->word, nodes[i]->count);
     }
@@ -156,7 +157,7 @@ void cord_free(concordancer_t *cord) {
 
 concordancer_t *read_cord_from_text_file(const char *file_name) {
     void* file = fopen(file_name, "r");
-    if(!file){
+    if(!file){ // ensure file exists
         return NULL;
     }
 
@@ -199,7 +200,7 @@ int write_cord_to_text_file(const concordancer_t *cord, const char *file_name) {
     }
 
     void* file = fopen(file_name, "w");
-    if(!file){
+    if(!file){ // ensure file exists
         return 0;
     }
 
