@@ -9,7 +9,12 @@ table_t *create_table() {
     // TODO Not yet implemented
     // malloc table size = length*size of listnode
     table_t *table = malloc(sizeof(table_t));
-    table->array = malloc(sizeof(list_node_t)*INITIAL_HASH_TABLE_SIZE);
+    table->array = malloc(sizeof(list_node_t*)*INITIAL_HASH_TABLE_SIZE);
+
+    for(int i = 0; i < INITIAL_HASH_TABLE_SIZE; i++){
+        table->array[i] = NULL;
+    }
+
     table->length = INITIAL_HASH_TABLE_SIZE;
     return table;
 }
@@ -26,6 +31,7 @@ int hash_code(const char* word) {
     int i = 0;
     while(word[i] != '\0'){
         sum += word[i] * i;
+        i++;
     }
     return sum;
 }
@@ -41,6 +47,9 @@ int cord_insert(concordancer_t *cord, const char *word) {
     if(NULL == array[index]){
         list_node_t *node = malloc(sizeof(list_node_t));
         strcpy((node->word), word);
+        node->next = NULL;
+        node->count = 0;
+        free(array[index]);
         array[index] = node;
         cord->size += 1;
     }
@@ -50,11 +59,15 @@ int cord_insert(concordancer_t *cord, const char *word) {
             curr = curr->next;
         }
         list_node_t *node = malloc(sizeof(list_node_t));
+        
         strcpy((node->word), word);
+        free(curr->next);
         curr->next = node;
+        node->count = 0;
+        node->next = NULL;
         cord->size += 1;
     }
-    return 0;
+    return -1;
 }
 
 int cord_query(concordancer_t *cord, const char *query) {
@@ -63,20 +76,20 @@ int cord_query(concordancer_t *cord, const char *query) {
 
     list_node_t **array = cord->table->array;
     if(NULL == array[index]){
-      return -1;
+      return 0;
     }
     else {
       	list_node_t *curr = array[index];
       	while(NULL != curr){
           	if(strcmp(query, curr->word) == 0){
                   curr->count += 1;
-                  return 0;
+                  return -1;
           	}
             curr = curr->next;
         }
-        return -1;
+        return 0;
     }
-    return -1;
+    return 0;
 }
 
 void cord_print(const concordancer_t *cord) {
@@ -124,22 +137,29 @@ void cord_reset(concordancer_t *cord) {
 }
 
 void cord_free(concordancer_t *cord) {
-    for(int i = 0; i < cord->table->length; i++){
+    if(NULL != cord){
+        for(int i = 0; i < cord->table->length; i++){
 
-      list_node_t *curr = cord->table->array[i];
+        list_node_t *curr = cord->table->array[i];
 
-      while(NULL != curr){
-        void* temp = curr;
-        curr = curr->next;
-        free(temp);
-      }
+        while(NULL != curr){
+            void* temp = curr;
+            curr = curr->next;
+            free(temp);
+        }
+        }
+        free(cord->table->array);
+        free(cord->table);
+        free(cord);
     }
-    free(cord->table);
-    free(cord);
 }
 
 concordancer_t *read_cord_from_text_file(const char *file_name) {
     void* file = fopen(file_name, "r");
+    if(!file){
+        return NULL;
+    }
+
     concordancer_t *cord = create_concordancer();
 
     char word[MAX_WORD_LEN];
@@ -179,11 +199,14 @@ int write_cord_to_text_file(const concordancer_t *cord, const char *file_name) {
     }
 
     void* file = fopen(file_name, "w");
+    if(!file){
+        return 0;
+    }
 
     for(int i = 0; i < count; i++){
     	fprintf(file, "%s %d\n", nodes[i]->word, nodes[i]->count);
     }
 
     fclose(file);
-    return 0;
+    return -1;
 }

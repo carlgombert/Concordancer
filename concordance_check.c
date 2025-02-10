@@ -10,29 +10,22 @@
 // 'file_name': Name of the file to spell check
 // 'cord': A concordancer containing valid words
 int concordance_file(const char *file_name, concordancer_t *cord) {
-    concordancer_t *new_cord = read_cord_from_text_file(file_name);
-
-    list_node_t *nodes[new_cord->size];
-    int count = 0;
-    
-    for(int i = 0; i < new_cord->table->length; i++){
-      list_node_t *curr = new_cord->table->array[i];
-      while(NULL != curr){
-        nodes[count] = curr;
-        curr = curr->next;
-        count++;
-      }
+    void* file = fopen(file_name, "r");
+    if(!file){
+        printf("Concordance check failed\n");
+        return 0;
     }
-
-    for(int i = 0; i < count; i++){
-    	printf("%s", nodes[i]->word);
-        if(!cord_query(cord, nodes[i]->word)){
+    char word[MAX_WORD_LEN];
+    while (fscanf(file, "%s", word) == 1){
+        printf("%s", word);
+        if(!cord_query(cord, word)){
             printf("[X]");
         }
         printf(" ");
     }
-    
-    return 0;
+    fclose(file);
+
+    return -1;
 }
 
 /*
@@ -61,7 +54,7 @@ int main(int argc, char **argv) {
             break;
         }
 
-        if (strcmp("add", cmd) == 0) {
+        else if (strcmp("add", cmd) == 0) {
             scanf("%s", cmd);
 
             if(NULL == cord){
@@ -73,16 +66,13 @@ int main(int argc, char **argv) {
                 if (!success) {                      
                     printf("add failed\n");
                 }
-                else{
-                    printf("added\n");
-                }
             }
             else{
-                printf("added\n");
+                printf("'%s' present in concordancer\n", cmd);
             }
         }
 
-        if (strcmp("query", cmd) == 0) {
+        else if (strcmp("query", cmd) == 0) {
             scanf("%s", cmd);
 
             if(NULL == cord){
@@ -90,45 +80,56 @@ int main(int argc, char **argv) {
             }
 
             if(cord_query(cord, cmd)){
-                printf("element exists\n");
+                printf("'%s' present in concordancer\n", cmd);
             }
-            printf("element does not exist\n");
+            else{
+                printf("'%s' not found\n", cmd);
+            }
         }
 
-        if (strcmp("print", cmd) == 0) {
+        else if (strcmp("print", cmd) == 0) {
             if(NULL == cord){
                 cord = create_concordancer();
             }
             cord_print(cord);
         }
 
-        if (strcmp("reset", cmd) == 0) {
+        else if (strcmp("reset", cmd) == 0) {
             if(NULL == cord){
                 cord = create_concordancer();
             }
             cord_reset(cord);
         }
 
-        if (strcmp("load", cmd) == 0) {
+        else if (strcmp("load", cmd) == 0) {
             scanf("%s", cmd);
 
             if(NULL != cord){
                 cord_free(cord);
+                cord = NULL;
             }
             
             cord = read_cord_from_text_file(cmd);
+            if(NULL == cord){
+                printf("Failed to read word list from text file\n");
+            }
+            else{
+                printf("Word list successfully read from text file\n");
+            }
         }
 
-        if (strcmp("save", cmd) == 0) {
+        else if (strcmp("save", cmd) == 0) {
             scanf("%s", cmd);
             if(NULL == cord){
                 cord = create_concordancer();
             }
             
-            write_cord_to_text_file(cord, cmd);
+            if(!write_cord_to_text_file(cord, cmd)){
+                printf("file does not exist");
+            }
         }
 
-        if (strcmp("concordance", cmd) == 0) {
+        else if (strcmp("concordance", cmd) == 0) {
             scanf("%s", cmd);
             
             if(NULL == cord){
@@ -138,7 +139,7 @@ int main(int argc, char **argv) {
             concordance_file(cmd, cord);
         }
 
-        if (strcmp("exit", cmd) == 0) {
+        else if (strcmp("exit", cmd) == 0) {
             cord_free(cord);
             return 0;
         }
