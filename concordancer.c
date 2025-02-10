@@ -143,9 +143,9 @@ concordancer_t *read_cord_from_text_file(const char *file_name) {
     concordancer_t *cord = create_concordancer();
 
     char word[MAX_WORD_LEN];
-    while (fscanf(file, "%*s", word) == 1){
-        if(!cord_query(cord, &word)){
-            cord_insert(cord, &word);
+    while (fscanf(file, "%s", word) == 1){
+        if(!cord_query(cord, word)){
+            cord_insert(cord, word);
         }
     }
     fclose(file);
