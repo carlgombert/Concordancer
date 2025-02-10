@@ -16,12 +16,23 @@ int concordance_file(const char *file_name, concordancer_t *cord) {
         return 0;
     }
     char word[MAX_WORD_LEN];
-    while (fscanf(file, "%s", word) == 1){
-        printf("%s", word);
-        if(!cord_query(cord, word)){
-            printf("[X]");
+    int i = 0;
+    char ch;
+
+    while ((ch = fgetc(file)) != EOF){
+        if(ch != ' ' && ch != '\n'){
+            word[i] = ch;
+            i++;
         }
-        printf(" ");
+        else{
+            word[i] = '\0';
+            i = 0;
+            printf("%s", word);
+            if(!cord_query(cord, word)){
+                printf("[X]");
+            }
+            printf("%c", ch);
+        }
     }
     fclose(file);
 
@@ -45,6 +56,14 @@ int main(int argc, char **argv) {
     printf("  save <file_name>:        writes concordancer to a file\n");
     printf("  concordance <file_name>: runs a concordance and spell check on the specified file\n");
     printf("  exit:                    exits the program\n");
+
+    if(argc > 1){
+        cord = read_cord_from_text_file(argv[1]);
+        if(argc > 2){
+            concordance_file(argv[2], cord);
+        }
+    }
+    
 
     while (1) {
         printf("concordance_check> ");
